@@ -1,3 +1,7 @@
 public class LeadTriggerHandler {
-    System.debug('test');
+    public static void blablabla(){
+        System.debug('test');
+    }
+
+
 }
