@@ -72,10 +72,6 @@
         <members>ChatterActivity</members>
         <members>CollaborationGroup</members>
         <members>CollaborationGroupMember</members>
-        <members>CommSubscription</members>
-        <members>CommSubscriptionChannelType</members>
-        <members>CommSubscriptionConsent</members>
-        <members>CommSubscriptionTiming</members>
         <members>ConsumptionRate</members>
         <members>ConsumptionSchedule</members>
         <members>Contact</members>
