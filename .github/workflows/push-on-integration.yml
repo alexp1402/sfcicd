@@ -13,7 +13,9 @@ on:
 jobs:
   validate-deployment-on-integration-org:
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    permissions:
+      # required for all workflows
+      security-events: write
     steps:
       # Install nodejs
       - uses: actions/setup-node@v2
