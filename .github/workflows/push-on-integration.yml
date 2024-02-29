@@ -11,8 +11,31 @@ on:
 
 # Jobs to be executed
 jobs:
+  run-pmd-scan:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v3
+
+      # Run PMD scan
+      - name: 'Run PMD scan'
+        uses: pmd/pmd-github-action@v1.4.0
+        id: pmd
+        with:
+          version: '6.55.0'
+          sourcePath: 'force-app'
+          rulesets: 'ruleset.xml'
+          
+       # Check for PMD violations
+      - name: 'Check for PMD violations'
+        if: steps.pmd.outputs.violations != 0
+        run: exit 1  
+
+####################################
   validate-deployment-on-integration-org:
     runs-on: ubuntu-latest
+    needs: run-pmd-scan
     permissions:
       # required for all workflows
       security-events: write
