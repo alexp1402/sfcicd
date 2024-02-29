@@ -101,6 +101,7 @@ jobs:
   #########################################
   deploy-branch-to-int-and-staging-orgs:
     runs-on: ubuntu-latest
+    needs: validate-deployment-on-integration-org
     steps:
       # Install Salesforce CLI
       - name: 'Install Salesforce CLI'
