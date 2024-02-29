@@ -1,12 +1,6 @@
 # Unique name for this workflow
 name: Deploy integration branch to INT
 
-permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-
 # Definition when the workflow should run
 on:
   push:
