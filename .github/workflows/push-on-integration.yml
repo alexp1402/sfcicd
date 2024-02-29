@@ -28,12 +28,14 @@ jobs:
           rulesets: 'ruleset.xml'
           
        # Check for PMD violations
-       - name: 'Check for PMD violations'
-         if: steps.pmd.outputs.violations != 0
-          run: exit 1  
+      - name: 'Check for PMD violations'
+        if: steps.pmd.outputs.violations != 0
+        run: exit 1  
 
+####################################
   validate-deployment-on-integration-org:
     runs-on: ubuntu-latest
+    needs: run-pmd-scan
     permissions:
       # required for all workflows
       security-events: write
