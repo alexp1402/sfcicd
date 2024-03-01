@@ -70,4 +70,10 @@
     >
         <priority>3</priority>
     </rule>
+    <rule
+            ref="category/apex/bestpractices.xml/AvoidGlobalModifier"
+            message="Avoid using global modifier in code"
+    >
+        <priority>3</priority>
+    </rule>
 </ruleset>
