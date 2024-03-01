@@ -1,4 +1,4 @@
-public class LeadTriggerHandler {
+global public class LeadTriggerHandler {
     public static String blablabla(){
         System.debug('test');
         System.debug('second comment');
