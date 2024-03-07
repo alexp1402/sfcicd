@@ -1,4 +1,4 @@
-global class SomeClass {
+public class SomeClass {
 
     public static void toDo(){
         System.debug('Alert for code scan');
