@@ -28,7 +28,7 @@ jobs:
         run: sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
           
       - name: 'Run all tests'
-       run: |
+        run: |
           echo ${{env.APEX_TESTS}}
           sfdx apex run test
 
