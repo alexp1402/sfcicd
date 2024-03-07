@@ -1,5 +1,5 @@
 # Unique name for this workflow
-name: Manual workflow
+name: Manual Run Test
 
 # Definition when the workflow should run
 on:
@@ -11,54 +11,8 @@ on:
 
 # Jobs to be executed
 jobs:
-  run_test:
-    runs-on: ubuntu-latest
-    steps:
-
-      # Install Salesforce CLI
-      - name: 'Install Salesforce CLI'
-        run: |
-          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-          mkdir ~/sfdx
-          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-          ~/sfdx/bin/sfdx version
-
-      # Get the Integration Org SFDX URL and store it in a text file
-      - name: 'Populate auth file with SFDX_URL secret of integration org'
-        shell: bash
-        run: |
-          echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
-
-      # Authenticate to org using the URL stored in the text file
-      - name: 'Authenticate to Integration Org'
-        run: sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
-          
-      # Create scratch org
-      - name: 'Create scratch org'
-        run: sf org create scratch -f config/project-scratch-def.json -a scratch-org -d -y 1
-
-      # Deploy source to scratch org
-      - name: 'Push source to scratch org'
-        run: sf project deploy start
-
-      # Assign permissionset
-      - name: 'Assign permissionset to default user'
-        run: sf org assign permset -n recipes
-
-      # Run Apex tests in scratch org
-      - name: 'Run Apex tests'
-        run: sf apex test run -c -r human -d ./tests/apex -w 20
-
-      # Upload code coverage data
-      - name: 'Upload code coverage for Apex to Codecov.io'
-        uses: codecov/codecov-action@v3
-        with:
-          flags: Apex
-
-
-#      - name: 'Run all tests'
-#       run: |
-#          echo ${{env.APEX_TESTS}}
-#          sfdx apex run test
+      - name: 'Run all tests'
+       run: |
+          echo ${{env.APEX_TESTS}}
+          sfdx apex run test
 
