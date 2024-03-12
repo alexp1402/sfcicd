@@ -6,7 +6,8 @@
   "scripts": {
     "myscript": "echo \"Starting BrowserSync\"",
     "force:cli":"wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz && mkdir ~/sfdx && tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1 && echo \"$HOME/sfdx/bin\" >> $GITHUB_PATH && ~/sfdx/bin/sfdx version",
-    "force:auth":"bash echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt && sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration",
+    "force:auth":"echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt",
+    "force:auth2": "sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration",
     "force:test:all":"sfdx apex run test",
     "lint": "eslint **/{aura,lwc}/**/*.js",
     "test": "npm run test:unit",
