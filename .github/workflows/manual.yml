@@ -13,8 +13,10 @@ jobs:
       - name: 'Checkout source code'
         uses: actions/checkout@v3
         
-      - name: 'Install Volta'
-        uses: volta-cli/action@v4
+      #- name: 'Install Volta'
+      #  uses: volta-cli/action@v4
+      - name: 'Run NPM'
+        run: npm run myscript
 
       #- name: 'Install Salesforce CLI'
       #  run: |
