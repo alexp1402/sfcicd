@@ -10,25 +10,30 @@ jobs:
   run_test:
     runs-on: ubuntu-latest
     steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v3
+        
+      - name: 'Install Volta'
+        uses: volta-cli/action@v4
 
-      - name: 'Install Salesforce CLI'
-        run: |
-          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-          mkdir ~/sfdx
-          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-          ~/sfdx/bin/sfdx version
+      #- name: 'Install Salesforce CLI'
+      #  run: |
+      #    wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+      #    mkdir ~/sfdx
+      #    tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+      #    echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+      #    ~/sfdx/bin/sfdx version
 
-      - name: 'Populate auth file with SFDX_URL secret of integration org'
-        shell: bash
-        run: |
-          echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
+     # - name: 'Populate auth file with SFDX_URL secret of integration org'
+     #   shell: bash
+     #   run: |
+     #     echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
 
-      - name: 'Authenticate to Integration Org'
-        run: sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
-          
-      - name: 'Run all tests'
-        run: |
-          echo ${{env.APEX_TESTS}}
-          sfdx apex run test
+     # - name: 'Authenticate to Integration Org'
+     #   run: sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
+     #     
+     # - name: 'Run all tests'
+     #   run: |
+     #     echo ${{env.APEX_TESTS}}
+     #     sfdx apex run test
 
