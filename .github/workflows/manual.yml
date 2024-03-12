@@ -21,7 +21,7 @@ jobs:
       - name: 'Run CLI'
         run: npm run force:cli
 
-      -name: 'Run auth'
+      - name: 'Run auth'
        run: npm run force:auth
 
       - name: 'Run all tests'
