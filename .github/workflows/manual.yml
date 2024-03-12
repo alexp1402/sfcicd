@@ -18,6 +18,10 @@ jobs:
       - name: 'Run NPM'
         run: npm run myscript
 
+      - name: 'Run CLI'
+        run: npm run salesforce:cli
+        
+
       #- name: 'Install Salesforce CLI'
       #  run: |
       #    wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
