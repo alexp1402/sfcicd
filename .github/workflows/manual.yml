@@ -19,7 +19,14 @@ jobs:
         run: npm run myscript
 
       - name: 'Run CLI'
-        run: npm run salesforce:cli
+        run: npm run force:cli
+
+      -name: 'Run auth'
+       run: npm run force:auth
+
+      - name: 'Run all tests'
+        run: npm run force:test:all
+  
         
 
       #- name: 'Install Salesforce CLI'
