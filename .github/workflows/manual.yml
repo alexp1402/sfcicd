@@ -23,7 +23,9 @@ jobs:
 
       - name: 'Run Auth'
         run: npm run force:auth
-  
+
+      - name: 'Run Auth2'
+        run: npm run force:auth2
         
 
       #- name: 'Install Salesforce CLI'
