@@ -21,8 +21,10 @@ jobs:
       - name: 'Run CLI'
         run: npm run force:cli
 
-      - name: 'Run Auth'
-        run: npm run force:auth
+      - name: 'Populate auth file with SFDX_URL secret of integration org'
+        shell: bash
+        run: |
+          echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
 
       - name: 'Run Auth2'
         run: npm run force:auth2
@@ -36,10 +38,7 @@ jobs:
       #    echo "$HOME/sfdx/bin" >> $GITHUB_PATH
       #    ~/sfdx/bin/sfdx version
 
-     # - name: 'Populate auth file with SFDX_URL secret of integration org'
-     #   shell: bash
-     #   run: |
-     #     echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
+
 
      # - name: 'Authenticate to Integration Org'
      #   run: sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
