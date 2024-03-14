@@ -44,13 +44,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 'Install Salesforce CLI'
-        run: |
-          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-          mkdir ~/sfdx
-          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-          ~/sfdx/bin/sfdx version
+      - name: 'Install CLI'
+        run: npm run force:cli
 
       - name: 'Installing sfdx git delta'
         run: |
@@ -68,8 +63,8 @@ jobs:
         run: |
           echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
 
-      - name: 'Authenticate to Integration Org'
-        run: sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
+      - name: 'Run Auth Int'
+        run: npm run force:auth
 
       - name: 'Create delta packages for new, modified or deleted metadata'
         run: |
