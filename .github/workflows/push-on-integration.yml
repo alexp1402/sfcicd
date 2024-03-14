@@ -35,10 +35,6 @@ jobs:
       security-events: write
     steps:
 
-      #- uses: actions/setup-node@v2
-      #  with:
-      #    node-version: '14'
-
       - name: 'Checkout source code'
         uses: actions/checkout@v2
         with:
@@ -47,14 +43,11 @@ jobs:
       - name: 'Install CLI'
         run: npm run force:cli
 
-      - name: 'Installing sfdx git delta'
-        run: npm run inst:delta
+      - name: 'Prepare sfdx git delta'
+        run: npm run prepare:delta
 
-      - name: 'Installing java'
-        run: npm run ubuntu:java
-
-      - name: 'Installing SFDX scanner'
-        run: npm run inst:scan
+      - name: 'Prepare scaner'
+        run: npm run prepare:scaner
 
       - name: 'Populate auth file with SFDX_URL secret of integration org'
         shell: bash
@@ -64,10 +57,7 @@ jobs:
       - name: 'Run Auth Int'
         run: npm run force:auth
 
-      - name: 'Create delta packages for new, modified or deleted metadata'
-        run: npm run createdelta
-
-      - name: 'Scan code'
+      - name: 'Run Scaner'
         run: npm run scaner:run
 
       - name: Upload SARIF file
@@ -75,55 +65,30 @@ jobs:
         with:
           sarif_file: changed-sources/apexScanResults.sarif
 
-      #- name: 'Check-only deploy delta changes - run all tests'
-      #  if: ${{ env.APEX_TESTS == 'all' }}
-      #  run: |
-      #    sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel RunLocalTests  --json
-
-      #- name: 'Deploy destructive changes (if any)'
-      #  run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
-
-
   #########################################
   deploy-branch-to-int-tests:
     runs-on: ubuntu-latest
     needs: validate-by-codescan
     steps:
-      # Install Salesforce CLI
-      - name: 'Install Salesforce CLI'
-        run: |
-          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-          mkdir ~/sfdx
-          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-          ~/sfdx/bin/sfdx version
 
-      # install SFDX-Git-Delta plugin - https://github.com/scolladon/sfdx-git-delta
-      - name: 'Installing sfdx git delta'
-        run: |
-          echo y | sfdx plugins:install sfdx-git-delta
-          sfdx plugins 
-
-      # Checkout the source code
       - name: 'Checkout source code'
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      # Store secret for both otgs
+      - name: 'Install CLI'
+        run: npm run force:cli
+
+      - name: 'Prepare delta for changes'
+        run: npm run prepare:delta
+
       - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
         shell: bash
         run: |
           echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
 
-      - name: 'Create delta packages for new, modified or deleted metadata'
-        run: |
-          mkdir changed-sources
-          sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output changed-sources/ --generate-delta --source force-app/
-
-      # Authenticate to org
-      - name: 'Authenticate to Integration Org'
-        run: sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
+      - name: 'Run Auth Int'
+        run: npm run force:auth
 
       - name: 'Deploy the entire branch to Integration org'
-        run: sfdx force:source:deploy -p force-app
+        run: npm run force:deploy
