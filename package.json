@@ -10,13 +10,11 @@
     "inst:scan":"sfdx plugins:install @salesforce/sfdx-scanner",
     "createdelta":"mkdir changed-sources && sfdx sgd:source:delta --to \"HEAD\" --from \"HEAD^\" --output changed-sources/ --generate-delta --source force-app/",
     "scaner:run":"cd changed-sources && sfdx scanner:run --format sarif --target './**/*.cls' --category \"Design,Best Practices,Performance\" --outfile 'apexScanResults.sarif' && cat apexScanResults.sarif && cd ..",
-
     "prepare:delta":"npm run inst:delta && npm run createdelta",
     "prepare:scaner":"npm run ubuntu:java && npm run inst:scan",
-
     
     "force:auth": "sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration",
-    
+    "force:deploy":"sfdx force:source:deploy -p force-app",
     "force:test:all":"sfdx apex run test"
   },
   "devDependencies": {
