@@ -48,13 +48,13 @@ jobs:
         run: npm run force:cli
 
       - name: 'Installing sfdx git delta'
-        run: npm run sfdx:delta
+        run: npm run inst:delta
 
       - name: 'Installing java'
         run: npm run ubuntu:java
 
       - name: 'Installing SFDX scanner'
-        run: mpn run sfdx:scaner
+        run: npm run inst:scan
 
       - name: 'Populate auth file with SFDX_URL secret of integration org'
         shell: bash
@@ -65,10 +65,10 @@ jobs:
         run: npm run force:auth
 
       - name: 'Create delta packages for new, modified or deleted metadata'
-        run: mpn run createdelta
+        run: npm run createdelta
 
       - name: 'Scan code'
-        run: mpn run scaner:run
+        run: npm run scaner:run
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
