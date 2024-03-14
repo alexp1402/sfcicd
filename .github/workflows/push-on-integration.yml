@@ -54,7 +54,7 @@ jobs:
         run: npm run ubuntu:java
 
       - name: 'Installing SFDX scanner'
-        run: mpn run sfdx:scaner"
+        run: mpn run sfdx:scaner
 
       - name: 'Populate auth file with SFDX_URL secret of integration org'
         shell: bash
