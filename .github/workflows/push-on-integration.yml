@@ -51,7 +51,7 @@ jobs:
         run: npm run sfdx:delta
 
       - name: 'Installing java'
-        run: npm run ubutnu:java
+        run: npm run ubuntu:java
 
       - name: 'Installing SFDX scanner'
         run: mpn run sfdx:scaner"
