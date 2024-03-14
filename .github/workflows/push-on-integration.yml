@@ -41,7 +41,7 @@ jobs:
           fetch-depth: 0
 
       - name: 'Install CLI'
-        run: npm run force:cli
+        run: npm run inst:force:cli
 
       - name: 'Prepare sfdx git delta'
         run: npm run prepare:delta
@@ -77,7 +77,7 @@ jobs:
           fetch-depth: 0
 
       - name: 'Install CLI'
-        run: npm run force:cli
+        run: npm run inst:force:cli
 
       - name: 'Prepare delta for changes'
         run: npm run prepare:delta
